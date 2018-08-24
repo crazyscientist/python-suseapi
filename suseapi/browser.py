@@ -74,6 +74,10 @@ def webscraper_safely(call, *args, **kwargs):
     # There doesn't seem to be an oserror that is already caught here?
     except IOError as exc:  # pylint: disable=duplicate-except
         raise WebScraperError('IO error: {0!s}'.format(exc), exc)
+    except WebScraperError:
+        raise
+    except Exception as exc:
+        raise WebScraperError(*exc.args)
 
 
 class WebScraper(object):
